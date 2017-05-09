@@ -1,4 +1,6 @@
-Brief description of the facility registry app:
+# MASTER FACILITY LIST DHIS2 APP FUNCTIONAL REQUIREMENT
+
+# #Brief description of the facility registry app:
 
 The app ishould be installable on a running DHIS2 instance. It should be developed using JavaScript (for the logic of the application) 
 and Bootstrap (for the layout and compatibility with mobile devices). 
@@ -7,3 +9,22 @@ and a special dataset created within DHIS2 that is called "Infrastructure datase
 which captures the signature and service domains data needed to feed the Facility Registry app. 
 The administration part of the app is accessible by login into DHIS2 with the appropriate rights. 
 But the app also offers a public facing interface to allow unauthenticated users to view public data (authorized by the country) from the dataset.
+
+
+
+## SCOPE OF THE APP
+
+
+## GLOBAL REQUIREMENTS
+
+
+## LIST OF FUNCTIONAL REQUIREMENTS
+
+
+### USE CASES
+*
+*
+*
+
+
+## LIST OF TECHNICAL REQUIREMENTS

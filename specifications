@@ -2,7 +2,7 @@
 
 # #Brief description of the facility registry app:
 
-The app ishould be installable on a running DHIS2 instance. It should be developed using JavaScript (for the logic of the application) 
+The app should be installable on a running DHIS2 instance. It should be developed using JavaScript (for the logic of the application) 
 and Bootstrap (for the layout and compatibility with mobile devices). 
 The application interacts with the DHIS2 database using the DHIS2 API. Its making use of the DHIS2 organization unit 
 and a special dataset created within DHIS2 that is called "Infrastructure dataset",
@@ -14,17 +14,65 @@ But the app also offers a public facing interface to allow unauthenticated users
 
 ## SCOPE OF THE APP
 
+- Offer DHIS2 based organisation unit as facility registry service with private and public facing interface
+
 
 ## GLOBAL REQUIREMENTS
+
+Should run on top of a DHIS2 instance
 
 
 ## LIST OF FUNCTIONAL REQUIREMENTS
 
+### Public interface
+
+1- Map view of public facilities location
+2- clicing on a facility point should display a set publicly available data about the selected facility (selected signature and service domain information/ data)
+3- Some useful information for the pbulic
+
+### DHIS2 users interface
+
+In addition to what is already available to the public interface the dhis2 logged in user will have access to the following informations
+1- detailed information about the facility maganger informations
+2- detailed information about the public and private facilities
+3- detailed information about geocodes of the facility
+4- detailed information about staffing
+5-detailed information about services provided
+6- Query the API
+7- generate reports
+8.etc.
+
+### Administration interface
+
+In addition to what is available to the dhis2 logged in user, the admin interface wuill provide a CRUD funtionality to the app. Meaning ability to:
+1- Update the infrastructure dataset
+2- correct geocodes of the facilities
+3- select what information should be available to the public interface and what should be kept to the authorised users
+4- select map backround
+5- Query the API
+6- create reports
+7. etc.
+
+### At a later stage a mobile app
+Providing functionalities to the end user to display the closes facility offering the service they need.
+
 
 ### USE CASES
-*
-*
-*
+
+* Public user using a computer
+* Public user using a mobile device
+* DHIS2 Logged in user
+* DHIS2 admin user
 
 
 ## LIST OF TECHNICAL REQUIREMENTS
+
+- The development of the app will make use of the following JavaScript frameworks:
+* Angular.js
+* JQuery
+* highmap
+- For the frontend:
+* Bootstrat for compatibility with mobile devices
+- For data excange:
+* Json
+* DHIS2 API

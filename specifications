@@ -29,6 +29,8 @@ Should run on top of a DHIS2 instance
 1- Map view of public facilities location
 2- clicing on a facility point should display a set publicly available data about the selected facility (selected signature and service domain information/ data)
 3- Some useful information for the pbulic
+4- search funtionality
+5- advanced search funtionality
 
 ### DHIS2 users interface
 

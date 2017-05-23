@@ -1,0 +1,13 @@
+#en-tete {
+	height: 120px;
+    background-color: powderblue;
+}
+
+.center {
+	width: 90%;
+	margin: auto;	
+}
+
+h1, h2 {
+    text-align: center;
+}

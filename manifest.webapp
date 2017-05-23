@@ -1,0 +1,23 @@
+{
+    "version": "1.0",
+    "name": "GUINEA MFL",
+    "description": "Master Facility List GUINEA",
+    "appType" : "APP",
+    "launch_path": "index.html",
+    "icons": {
+        "16": "img/icons/measure.png",
+        "48": "img/icons/measure.png",
+        "128": "img/icons/measure.png"
+    },
+    "developer": {
+        "name": "Diao Diallo, JSI Guinea ",
+        "url": "http://www.jsi.com"
+    },
+    "default_locale": "en",
+    "activities": {
+        "dhis": {
+            "namespace" : "mfl",
+            "href": "*"
+        }
+    }
+}

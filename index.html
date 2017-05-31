@@ -8,7 +8,8 @@
      <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css" />
 
      <!-- MAP CSS -->
-     <link rel="stylesheet" type="text/css" href="https://dhis2-cdn.org/v215/ext/resources/css/ext-plugin-gray.css" />
+     <link rel="stylesheet" href="http://dhis2-cdn.org/v222/ext/resources/css/ext-plugin-gray.css" />
+  
 	       
 	 </head>
      <body>
@@ -17,9 +18,10 @@
           <div id="en-tete" class="center">
             <h1>Bienvenu a la LSS de la Guinee</h1>
           </div>
+          <!--
           <div id="navigation" class="center">
             <h2>Bar de navigation</h2>
-            <!-- Appeler les services orgUnits -->
+            
              <FORM>
                Select the zone <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
                                 ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
@@ -31,12 +33,19 @@
                </select>
                Select the area <select ng-model="selectedArea" ng-options="area.displayName for area in areas"
                                ng-change="getFacilities(selectedArea.id)">
+               </select> 
+               Select the Region <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
+                                ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
+               </select>
+               Select the district <select ng-model="selectedDistrict" ng-options="district.displayName for district in districts"
+                               ng-change="getFacilities(selectedDistrict.id)">
                </select>
              </FORM>
-          </div>
-          <div id="corps" class="center">
+          </div> -->
+                    <div id="corps" class="center">
             <h2>Les structures selectionnees</h2>
-            </div id="map1"><div>
+          <div id="map1" style="height: 300px"></div>
+          <!--
             <div>
                 <table class="table table-bordered table-hover">
                    <thead>
@@ -60,7 +69,7 @@
               
                 </table>
             </div>
-          </div>
+          </div> -->
           <div id="pied-page" class="center">
              <h2>Pied de page</h2>
           </div>       
@@ -76,15 +85,13 @@
   <!-- <script src="js/highcharts.js"></script> -->
 
   <!-- MAP Plugin scripts -->
-  <script src="https://dhis2-cdn.org/v215/ext/ext-all.js"></script>
-  <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
-  <script src="https://dhis2-cdn.org/v215/openlayers/OpenLayers.js"></script>
-  <script src="https://dhis2-cdn.org/v215/plugin/map.js"></script>
+<script src="http://dhis2-cdn.org/v222/ext/ext-all.js"></script>
+<script src="http://dhis2-cdn.org/v226/plugin/map.js"></script>
 
     <!-- Facility scripts -->
     <script type="text/javascript" src="js/custom/services.js"></script>
     <script type="text/javascript" src="js/custom/app.js"></script>
-    <script type="text/javascript" src="js/custom/map1.js"></script>
+   <script type="text/javascript" src="js/custom/map1.js"></script>
 
 
 

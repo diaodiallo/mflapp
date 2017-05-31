@@ -3,17 +3,18 @@
 angular.module("mfl_app", ['mflServices'])
 .controller("OrganisationUnitsController", function($scope, getFacilitiesService, getOrgUnitsService){
  
-      var countryId = "Hjw70Lodtf2";
+     // var countryId = "Hjw70Lodtf2";
+      var countryId = "Ky2CzFdfBuO";
 
       $scope.regionLevel = 2;
       $scope.districtLevel = 3;
-      $scope.subDistrictLevel = 4;
-      $scope.areaLevel = 5;
+      //$scope.subDistrictLevel = 4;
+      //$scope.areaLevel = 5;
       
       $scope.regions = null;
       $scope.districts = null;
-      $scope.subDistricts = null;
-      $scope.areas = null;
+      //$scope.subDistricts = null;
+      //$scope.areas = null;
       $scope.facilities = null;
 
       $scope.getOrganisationUnits = function(level, ancestorId){
@@ -28,14 +29,14 @@ angular.module("mfl_app", ['mflServices'])
          	$scope.districts = result.data.organisationUnits;
          	console.debug($scope.districts);
          }
-         else if(level == 4){
+         /*else if(level == 4){
          	$scope.subDistricts = result.data.organisationUnits;
          	console.debug($scope.subDistricts);
          }
          else if(level == 5){
          	$scope.areas = result.data.organisationUnits;
          	console.debug($scope.areas);
-         }
+         }*/
 
          $scope.getFacilities(ancestorId);
 

@@ -3,9 +3,11 @@
    Ext.onReady(function() {
 
    DHIS.getMap({
-  "id": "V5ehpEUuDLl", // or map config
+  //"id": "qpSVp4QJ67Q", // or map config
+  "id": "qbPU8cuEEEN",
   "el": "map1",
-  "url": "https://dhis2.jsi.com/dss"
+  //"url": "https://dhis2.jsi.com/dss"
+  "url": "http://localhost:8080",
 });
 
 });

@@ -1,6 +1,21 @@
 <!-- Application -->
 
-angular.module("mfl_app", ['mflServices'])
+angular.module("mfl_app", ['ngRoute', 'mflServices'])
+.config(function($routeProvider){
+   $routeProvider
+   .when("/dashboard", {
+         templateUrl : "partials/dashboard.html"
+   })
+   .when("/map", {
+         templateUrl : "partials/map.html"
+   })
+   .when("/param", {
+         templateUrl : "partials/param.html"
+   })
+   .otherwise({
+         redirectTo : "dashboard"
+   });
+})
 .controller("OrganisationUnitsController", function($scope, getFacilitiesService, getOrgUnitsService){
  
      // var countryId = "Hjw70Lodtf2";

@@ -1,0 +1,53 @@
+<div class="container" ng-controller="OrganisationUnitsController">
+          
+          <div id="navigation" class="center">
+            <h2>Bar de navigation</h2>
+            
+             <FORM>
+               Select the zone <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
+                                ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
+               </select>
+               Select the district <select ng-model="selectedDistrict" ng-options="district.displayName for district in districts"
+                               ng-change="getOrganisationUnits(subDistrictLevel, selectedDistrict.id)">
+               </select>
+               Select the sub district <select ng-model="selectedSubDistrict" ng-options="subDistrict.displayName for subDistrict in subDistricts" ng-change="getOrganisationUnits(areaLevel, selectedSubDistrict.id)">
+               </select>
+               Select the area <select ng-model="selectedArea" ng-options="area.displayName for area in areas"
+                               ng-change="getFacilities(selectedArea.id)">
+               </select> 
+               Select the Region <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
+                                ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
+               </select>
+               Select the district <select ng-model="selectedDistrict" ng-options="district.displayName for district in districts"
+                               ng-change="getFacilities(selectedDistrict.id)">
+               </select>
+             </FORM>
+          </div> 
+                    <div id="corps" class="center">
+            <h2>Les structures selectionnees</h2>
+    
+            <div>
+                <table class="table table-bordered table-hover">
+                   <thead>
+                     <tr>
+                       <th>Code</th>
+                       <th>Structure</th>
+                       <th>Type de structure</th>
+                       <th>Proprietaire</th>
+                       <th>Services offerts</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr ng-repeat="facility in facilities">
+                       <td>{{facility.id}}</td>
+                       <td>{{facility.displayName}}</td>
+                       <td>Poste de sante</td>
+                       <td>Public</td>
+                       <td>CPN, PEV, Maternite</td>
+                     </tr>
+                   </tbody>
+              
+                </table>
+            </div>
+          </div>
+</div>

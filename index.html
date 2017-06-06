@@ -14,71 +14,37 @@
 	 </head>
      <body>
 
-     <div class="container" ng-controller="OrganisationUnitsController">
           <div id="en-tete" class="center">
             <h1>Bienvenu a la LSS de la Guinee</h1>
           </div>
-          <!--
-          <div id="navigation" class="center">
-            <h2>Bar de navigation</h2>
-            
-             <FORM>
-               Select the zone <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
-                                ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
-               </select>
-               Select the district <select ng-model="selectedDistrict" ng-options="district.displayName for district in districts"
-                               ng-change="getOrganisationUnits(subDistrictLevel, selectedDistrict.id)">
-               </select>
-               Select the sub district <select ng-model="selectedSubDistrict" ng-options="subDistrict.displayName for subDistrict in subDistricts" ng-change="getOrganisationUnits(areaLevel, selectedSubDistrict.id)">
-               </select>
-               Select the area <select ng-model="selectedArea" ng-options="area.displayName for area in areas"
-                               ng-change="getFacilities(selectedArea.id)">
-               </select> 
-               Select the Region <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
-                                ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
-               </select>
-               Select the district <select ng-model="selectedDistrict" ng-options="district.displayName for district in districts"
-                               ng-change="getFacilities(selectedDistrict.id)">
-               </select>
-             </FORM>
-          </div> -->
-                    <div id="corps" class="center">
-            <h2>Les structures selectionnees</h2>
-          <div id="map1" style="height: 300px"></div>
-          <!--
-            <div>
-                <table class="table table-bordered table-hover">
-                   <thead>
-                     <tr>
-                       <th>Code</th>
-                       <th>Structure</th>
-                       <th>Type de structure</th>
-                       <th>Proprietaire</th>
-                       <th>Services offerts</th>
-                     </tr>
-                   </thead>
-                   <tbody>
-                     <tr ng-repeat="facility in facilities">
-                       <td>{{facility.id}}</td>
-                       <td>{{facility.displayName}}</td>
-                       <td>Poste de sante</td>
-                       <td>Public</td>
-                       <td>CPN, PEV, Maternite</td>
-                     </tr>
-                   </tbody>
-              
-                </table>
-            </div>
-          </div> -->
+
+          <nav class="navbar center" role="navigation">
+              <div class="container-fluid">
+                 <ul class="nav navbar-nav">
+                    <li class="active">
+                      <a href="#/dashboard">Dashboard</a>
+                    </li>
+                    <li>
+                      <a href="#/map">Map</a>
+                    </li>
+                    <li>
+                      <a href="#/param">paramètrage</a>
+                    </li>
+                 </ul>
+              </div>
+          </nav>
+
+          <div ng-view></div>
+          
           <div id="pied-page" class="center">
              <h2>Pied de page</h2>
           </div>       
-     </div>
           
          
 
     <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+  <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/angular.min.js"></script>
   <script src="js/angular-route.min.js"></script>
@@ -91,7 +57,7 @@
     <!-- Facility scripts -->
     <script type="text/javascript" src="js/custom/services.js"></script>
     <script type="text/javascript" src="js/custom/app.js"></script>
-   <script type="text/javascript" src="js/custom/map1.js"></script>
+   <!-- <script type="text/javascript" src="js/custom/map1.js"></script> -->
 
 
 

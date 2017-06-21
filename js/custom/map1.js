@@ -1,6 +1,6 @@
 //var base = "https://dhis2.jsi.com/dss";
 
-   Ext.onReady(function() {
+  /* Ext.onReady(function() {
 
    DHIS.getMap({
   //"id": "qpSVp4QJ67Q", // with facilities
@@ -10,4 +10,8 @@
   "url": "http://localhost:8080",
 });
 
-});
+});  */
+
+  // GOOGLE API
+
+  

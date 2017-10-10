@@ -29,10 +29,41 @@ return {
 
     return {
 
-    	getOrganisationUnits: function(level, ancestorId) {
+    	getOrganisationUnits: function(level, ancestorId, sets) {
 
-		var OrgUnitsURL = 'organisationUnits.json?filter=level:eq:'+level+'&filter=path:like:'+ancestorId+'&fields=[id,displayName,ancestors,coordinates]&paging=false';
+            if (sets == null || sets.length == 0) {
+
+            	var OrgUnitsURL = '25/organisationUnits.json?filter=level:eq:'+level+'&filter=path:like:'+ancestorId+'&fields=id,displayName,ancestors[id,name],organisationUnitGroups[id,name],coordinates&paging=false';
+
+            } else if(sets.length == 1) {
+
+            	var OrgUnitsURL = '25/organisationUnits.json?filter=level:eq:'+level+'&filter=path:like:'+ancestorId+'&filter=organisationUnitGroups.id:eq:'+sets[0].groupId+'&fields=id,displayName,ancestors[id,name],organisationUnitGroups[id,name],coordinates&paging=false';
+
+            } else if(sets.length == 2) {
+
+            	var OrgUnitsURL = '25/organisationUnits.json?filter=level:eq:'+level+'&filter=path:like:'+ancestorId+'&filter=organisationUnitGroups.id:in:['+sets[0].groupId+','+sets[1].groupId+']&fields=id,displayName,ancestors[id,name],organisationUnitGroups[id,name],coordinates&paging=false';
+
+            }    
+		
+		//var OrgUnitsURL = 'organisationUnits.json?filter=level:eq:'+level+'&filter=path:like:'+ancestorId+'&fields=[id,displayName,ancestors,coordinates]&paging=false';
 			return $http.get(URL + OrgUnitsURL);
+
+	},
+
+    }
+})
+.factory("getOrgUnitGroupSetsService", function($http){
+
+   // var URL = "https://dhis2.jsi.com/dss/api/";
+    var URL = "http://localhost:8080/api/"; 
+
+    return {
+
+    	getOrganisationUnitGroupSets: function() {
+        
+		var OrgUnitGroupSetsURL = '25/organisationUnitGroupSets.json?fields=id,displayName,organisationUnitGroups[id,displayName]&paging=false';
+		//var OrgUnitsURL = 'organisationUnits.json?filter=level:eq:'+level+'&filter=path:like:'+ancestorId+'&fields=[id,displayName,ancestors,coordinates]&paging=false';
+			return $http.get(URL + OrgUnitGroupSetsURL);
 
 	},
 
@@ -88,4 +119,235 @@ return {
         
        },
     }
+})
+.factory("getDataService", function($http){
+
+//var URL = "https://dhis2.jsi.com/dss/api/";
+var URL = "http://localhost:8080/api/";
+
+return {
+
+	getDetails: function(id, period, facilityId) { 
+
+	   var sections = [];
+	   var groupElemURL = '25/dataElementGroupSets/'+id+'.json?fields=dataElementGroups[id,name]';
+	   console.debug("Dans fonction");
+
+
+          $.ajax({
+			type: 'GET',
+			url: URL + groupElemURL,
+			success: function (response) { 
+				//console.debug(response);
+				$.each(response.dataElementGroups, function (i, item) {
+                        
+                        var section = [];
+					    var elements = [];
+					    var data = [];
+					    var groupe = {
+					    	"groupName":"",
+					    	"section":[]
+					    };
+					    var elementsURL = '25/dataElements.json?filter=dataElementGroups.id:eq:'+item.id+'&paging=false';
+                        var detailsURL = '25/dataValueSets.json?dataElementGroup='+item.id+'&period='+period+'&orgUnit='+facilityId+'&paging=false';
+				         
+				         $.ajax({ 
+			                     type: 'GET',
+			                     url: URL + elementsURL,
+			                     success: function (response) {
+				                 //Recuperer les elements du group
+				                 //console.debug(response);
+				                elements = response.dataElements;
+				                 //console.debug(elements);
+
+                                    $.ajax({ 
+			                                 type: 'GET',
+			                                 url: URL + detailsURL,
+			                                 success: function (response) {
+			                                 	//console.debug(response);
+				                             //Recuperer les donnees du groupe
+				                            data = response.dataValues;
+				                             //console.debug(data);
+
+				                                     for (var j = 0; j < elements.length; j++) {
+				                                        var ligne = {
+				                                        	"id":"",
+				                                        	"dataElement":"",
+				                                        	"value":""
+				                                        };
+                                                       if (typeof data !== 'undefined' && data !== null && data.length > 0) {
+                                                          for (var k = 0; k < data.length; k++) {
+                     
+                                                              if (elements[j].id == data[k].dataElement) {
+                     	                                      ligne.id = elements[j].id;
+                                                              ligne.dataElement = elements[j].displayName;
+                                                              ligne.value = data[k].value;
+                                                              section.push(ligne);
+                                                              // console.debug(section);
+                                                              }
+                                                          }
+                                                       }
+                                                    }
+
+			                                 },
+			                        error: function (response) {
+                                    console.debug("Un probleme dans le chargement des donnees 1 groupe");
+			                        }
+		                            });
+
+
+			                     },
+			                      error: function (response) {
+                                     console.debug("Un probleme dans le chargement des elements 1 groupe");
+			                      }
+		                });
+                     
+                                              
+
+                      //Recuperer le groupe et les donnees
+                      groupe.groupName = item.name;
+                      groupe.section = section;
+                      //console.debug(groupe);
+                      sections.push(groupe);
+
+					
+				});
+			},
+			error: function (response) {
+                console.debug("Un probleme dans les chargement des groupes elements");
+			}
+		});
+        //console.debug(sections);
+		return sections;
+	},
+}
 });
+/*
+.factory("getDataService", function($http){
+
+//var URL = "https://dhis2.jsi.com/dss/api/";
+var URL = "http://localhost:8080/api/";
+var groupElements = [];
+var sections = [];
+
+var getGroupElements = function(id){
+
+	   var groupElemURL = '25/dataElementGroupSets/'+id+'.json?fields=dataElementGroups[id,name]';
+			return $http.get(URL + groupElemURL);
+
+}
+
+var getElements = function(id){
+
+	   var elementsURL = '25/dataElements.json?filter=dataElementGroups.id:eq:'+id+'&paging=false';
+			return $http.get(URL + elementsURL);
+
+}
+
+var getDetails = function(id, period, facilityId){
+
+	   var detailsURL = '25/dataValueSets.json?dataElementGroup='+id+'&period='+period+'&orgUnit='+facilityId+'&paging=false';
+			return $http.get(URL + detailsURL);
+
+}
+
+
+return {
+
+	getDetails: function(id, period, facilityId) { 
+
+		groupElements = getElements(id);
+		console.debug(groupElements);
+		for (var i = 0; i < groupElements.length; i++) {
+			var elements = getElements(groupElements[i].id);
+			var donnees = getDetails(groupElements[i].id, period, facilityId);
+            var section = [];
+            var group = null;
+            console.debug(elements);
+            console.debug(donnees);
+			for (var j = 0; j < elements.length; j++) {
+				  var ligne = null;
+                 
+                  for (var k = 0; k < donnees.length; k++) {
+                     
+                     if (elements[j].id == donnees[k].dataElement) {
+                     	 ligne.id = elements[j].id;
+                         ligne.dataElement = elements[j].displayName;
+                         ligne.value = donnees[k].value;
+                         section.push(ligne);
+                         
+                     }
+                  }
+                  
+             }
+             group.group = groupElements[i].name;
+             group.section = section;
+             sections.push(group);
+		}
+		console.debug(sections);
+		return sections;
+	},
+
+}
+}); */
+
+/*
+.factory("getGroupElementService", function($http){
+
+//var URL = "https://dhis2.jsi.com/dss/api/";
+var URL = "http://localhost:8080/api/";
+
+return {
+
+	getGroupElements: function(ensGroupId) { 
+         // Id du ens groupe OQbb6iRztf4
+		//var elementsURL = '25/dataElements?filter=dataSetElements.dataSet.id:eq:qSYUcZkI1ig&fields=id,shortName,dataElementGroups[id,name]&paging=false';
+		  var groupElemURL = '25/dataElementGroupSets/'+ensGroupId+'.json?fields=dataElementGroups[id,name]';
+			return $http.get(URL + groupElemURL);
+		
+	},
+
+}
+})
+.factory("getElementService", function($http){
+
+//var URL = "https://dhis2.jsi.com/dss/api/";
+var URL = "http://localhost:8080/api/";
+
+//RECUPERER LES SECTION : PARAM OrgId, Period, deGroup RESULT section
+  //25/analytics.json?dimension=dx:DE_GROUP-EA73MFyukEv&dimension=pe:2017&dimension=ou:kJRsUAiJnHZ&paging=false
+
+return {
+
+	getElements: function(groupId) { 
+
+         //id d'un groupe YvDtXDZ8lIz
+		//var detailsURL = '25/dataValueSets?dataSet=qSYUcZkI1ig&period=2017&orgUnit='+facilityId+'&paging=false';
+		  var elementsURL = '25/dataElements.json?filter=dataElementGroups.id:eq:'+groupId+'&paging=false';
+			return $http.get(URL + elementsURL);
+		
+	},
+
+}
+})
+.factory("getDetailsService", function($http){
+
+//var URL = "https://dhis2.jsi.com/dss/api/";
+var URL = "http://localhost:8080/api/";
+
+//RECUPERER LES SECTION : PARAM OrgId, Period, deGroup RESULT section
+  //25/analytics.json?dimension=dx:DE_GROUP-EA73MFyukEv&dimension=pe:2017&dimension=ou:kJRsUAiJnHZ&paging=false
+
+return {
+
+	getDetails: function(groupId, period, facilityId) { 
+
+		//var detailsURL = '25/dataValueSets?dataSet=qSYUcZkI1ig&period=2017&orgUnit='+facilityId+'&paging=false';
+		 // var detailsURL = '25/analytics.json?dimension=dx:DE_GROUP-'+groupId+'&dimension=pe:'+period+'&dimension=ou:'+facilityId+'&paging=false';
+		  var detailsURL = '25/dataValueSets.json?dataElementGroup='+groupId+'&period='+period+'&orgUnit='+facilityId+'&paging=false';
+			return $http.get(URL + detailsURL);
+		
+	},
+
+}
+})*/

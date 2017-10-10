@@ -6,24 +6,36 @@ angular.module("mfl_app", ['ngRoute', 'mflServices'])
    .when("/dashboard", {
          templateUrl : "partials/dashboard.html"
    })
-   .when("/map", {
-         templateUrl : "partials/map.html"
+   .when("/structures", {
+         templateUrl : "partials/structures.html"
+   })
+   .when("/details/", {
+         templateUrl : "partials/details.html"
    })
    .when("/param", {
          templateUrl : "partials/param.html"
+   })
+   .when("/faqs", {
+         templateUrl : "partials/faqs.html"
+   })
+   .when("/feedback", {
+         templateUrl : "partials/feedback.html"
    })
    .otherwise({
          redirectTo : "dashboard"
    });
 })
-.controller("OrganisationUnitsController", function($scope, getOrgUnitsService){
+.controller("OrganisationUnitsController", function($scope, getOrgUnitsService, getOrgUnitGroupSetsService){
  
      // var countryId = "Hjw70Lodtf2";
       var countryId = "Ky2CzFdfBuO";
 
       $scope.regionLevel = 2;
       $scope.districtLevel = 3;
-      //$scope.subDistrictLevel = 4;
+      $scope.facilityLevel = 4;
+      $scope.currentOrg = {"level":"",
+                           "ancestor":""
+                          };
       //$scope.areaLevel = 5;
       
       $scope.regions = null;
@@ -31,10 +43,20 @@ angular.module("mfl_app", ['ngRoute', 'mflServices'])
       //$scope.subDistricts = null;
       //$scope.areas = null;
       $scope.facilities = null;
+      $scope.orgUnitGroupSets = null;
+
+      $scope.sets = [];
+      /*$scope.ensemble = {
+         "propriete":"",
+         "type":""
+      }*/
 
       $scope.getOrganisationUnits = function(level, ancestorId){
 
-      getOrgUnitsService.getOrganisationUnits(level, ancestorId).then(function(result){
+      getOrgUnitsService.getOrganisationUnits(level, ancestorId, null).then(function(result){
+
+         $scope.currentOrg.level = level;
+         $scope.currentOrg.ancestor = ancestorId;
 
          if(level == 2){
          	$scope.regions = result.data.organisationUnits;
@@ -53,22 +75,149 @@ angular.module("mfl_app", ['ngRoute', 'mflServices'])
          	console.debug($scope.areas);
          }*/
 
-         $scope.getFacilities(ancestorId);
+         $scope.getFacilities(level, ancestorId);
 
       });
 
   };
 
-  $scope.getFacilities = function(ancestorId){
+  $scope.getFacilities = function(level, ancestorId){
 
-      getOrgUnitsService.getOrganisationUnits(4, ancestorId).then(function(result){
+      getOrgUnitsService.getOrganisationUnits(level, ancestorId, $scope.sets).then(function(result){
       	$scope.facilities = result.data.organisationUnits;
       	//console.debug($scope.facilities);
       });
   };
 
-      $scope.getOrganisationUnits(2, countryId);
-      $scope.getFacilities(countryId);
+  $scope.getOrgUnitGroupSets = function(){
+
+      getOrgUnitGroupSetsService.getOrganisationUnitGroupSets().then(function(result){
+         $scope.orgUnitGroupSets = result.data.organisationUnitGroupSets;
+         console.debug($scope.orgUnitGroupSets);
+      });
+  };
+
+  $scope.getEnsemble = function(orgUnitGroup, ens){
+      
+      console.debug(orgUnitGroup.length);
+
+    if (typeof $scope.orgUnitGroupSets !== 'undefined' && $scope.orgUnitGroupSets !== null && $scope.orgUnitGroupSets.length > 0) {
+
+
+               var group = $scope.orgUnitGroupSets[ens].organisationUnitGroups;
+
+               for (var j = 0; j < group.length; j++) {
+                    for (var k = 0; k < orgUnitGroup.length; k++) {
+                       
+                       if (group[j].displayName == orgUnitGroup[k].name) {
+
+                            return group[j].displayName;
+
+                       }
+                    }
+               }
+    }
+  };
+
+  $scope.filtreTypeProprio = function(level, ancestorId, idEnsemble, idGroup){
+      
+       var couple = {"ensId":"","groupId":""};
+       var test = 0;
+
+           couple.ensId = idEnsemble;
+           couple.groupId = idGroup;
+
+          if (typeof $scope.sets !== 'undefined' && $scope.sets !== null && $scope.sets.length > 0) {
+            for (var i = 0; i < $scope.sets.length; i++) {
+               if ($scope.sets[i].ensId == couple.ensId && $scope.sets[i].groupId !== couple.groupId) {
+                        $scope.sets[i].groupId = couple.groupId;
+                        test = 1;
+                        $scope.getFacilities(level,ancestorId);
+               }
+               else if ($scope.sets[i].ensId == couple.ensId && $scope.sets[i].groupId == couple.groupId) {
+                        test = 1;
+               }
+            }
+
+
+                if (!test) {
+                     $scope.sets.push(couple);
+                     $scope.getFacilities(level,ancestorId);
+                }
+          
+          } else{
+                    $scope.sets.push(couple);
+                    $scope.getFacilities(level,ancestorId);
+          }
+
+          
+          
+
+  };
+
+  /*
+
+  $scope.getPropriete = function(orgUnitGroup){
+      
+      console.debug(orgUnitGroup.length);
+
+    if (typeof $scope.orgUnitGroupSets !== 'undefined' && $scope.orgUnitGroupSets !== null && $scope.orgUnitGroupSets.length > 0) {
+
+      for (var i = 0; i < $scope.orgUnitGroupSets.length; i++) {
+
+               var group = $scope.orgUnitGroupSets[i].organisationUnitGroups;
+
+               for (var j = 0; j < group.length; j++) {
+                    for (var k = 0; k < orgUnitGroup.length; k++) {
+                       
+                       if (group[j].displayName == orgUnitGroup[k].name) {
+
+                            if (i == 0) {
+                                $scope.ensemble.propriete = group[j].displayName;
+                            } else if (i == 1) {
+                                $scope.ensemble.type = group[j].displayName;
+                            }
+
+                       }
+                    }
+               }
+        
+      }
+    }
+  };  */
+
+      $scope.getOrganisationUnits(2, countryId, null);
+      $scope.getFacilities(4,countryId);
+      $scope.getOrgUnitGroupSets();
+
+})
+.controller("detailsController", function($scope, $location, getDataService){
+
+        //Variables
+        var ensGroupId = "OQbb6iRztf4";
+        var period = "2017";
+        var facilityId = $location.search().id;
+        $scope.data = null;
+   
+       // $scope.sections = null;     
+
+       /* $scope.sec = [
+                        {"groupName":"Identification", "section":[{"dataElement":"Nom structure", "value":"Kouroula"},{"dataElement":"Population", "value":200}]},
+                        {"groupName":"Service offert", "section":[{"dataElement":"Premiere CPN", "value":"Oui"},{"dataElement":"Vaccination", "value":"Non"}]},
+                        {"groupName":"Infrastructure", "section":[{"dataElement":"Nombre de lit", "value":3},{"dataElement":"Nombre de voiture", "value":1}]}
+        ]; */
+   
+      $scope.getData =  function(ensGroupId, period, facilityId) {
+       
+
+        $scope.data = getDataService.getDetails(ensGroupId, period, facilityId);
+              console.debug("---------------");
+              console.debug($scope.data);
+
+
+    }
+
+  $scope.getData(ensGroupId, period, facilityId);
 
 })
 .controller("MapController", function($scope, getOrgUnitsService, getRegionService){
@@ -341,7 +490,7 @@ angular.module("mfl_app", ['ngRoute', 'mflServices'])
 
         $scope.map = new google.maps.Map(element, options);
 
-        $scope.map.data.loadGeoJson('js/custom/guinea.json');
+        //$scope.map.data.loadGeoJson('js/custom/guinea.json');
 
         for (var i = 0; i < Regions.length; i++){
                   createMarkerRegion(Regions[i]);
@@ -396,64 +545,77 @@ angular.module("mfl_app", ['ngRoute', 'mflServices'])
 
      });
 
-     // Regions and Number of structures
-
-       
-
-
-    /* var selectionRegion = function(facility){
-         regions = getRegionService.getRegions(facility);
-          //console.debug(regions);
-            }; 
-
-         selectionRegion(facilities);
-           
-     */
-
-     //MAP 
-   /*   var options = {
-      zoom: 6,
-      center: new google.maps.LatLng(10, -11), 
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    },
-  
-    element = document.getElementById('map'); */
-   
-  /* $scope.map = new google.maps.Map(element, options);
-
-   $scope.map.data.loadGeoJson('js/custom/guinea.json');
-
-   $scope.markers = [];
-
-   var infoWindow = new google.maps.InfoWindow(); */
-
-  /* var createMarker = function (region){
-                  
-                  var marker = new google.maps.Marker({
-                      map: $scope.map,
-                      position: new google.maps.LatLng(region.coords[1], region.coords[0]),
-                      title: region.displayName,
-                      content: region.count
-                  });
-                 // marker.content = '<div>' + region.count + '</div>';
-                  
-                  google.maps.event.addListener(marker, 'click', function(){
-                      infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-                      infoWindow.open($scope.map, marker);
-                  });
-                  
-                  $scope.markers.push(marker);
-                  
-              }  */
-              
-             /* for (var i = 0; i < Regions.length; i++){
-                  createMarker(Regions[i]);
-              } */
-
-              /*$scope.openInfoWindow = function(e, selectedMarker){
-                  e.preventDefault();
-                  google.maps.event.trigger(selectedMarker, 'click');
-              }*/
-
-
 });
+/*
+.controller("detailsController", function($scope, $location, getGroupElementService, getElementService, getDetailsService){
+
+        //Variables
+        var ensGroupId = "OQbb6iRztf4";
+        var period = "2017";
+        var groupElements = [];
+        var elements = [];
+        var donnees = [];
+        var ligne = null;
+        var section = [];
+        $scope.sections = [];
+ 
+        var facilityId = $location.search().id;
+        console.debug(facilityId);
+    
+  $scope.getGroupElements = function(Id, p, structId, elementsAndDetails){
+
+          console.debug('param Group : '+Id, p, structId);
+      getGroupElementService.getGroupElements(Id).then(function(result){
+            groupElements = result.data.dataElementGroups; 
+            console.debug(groupElements);
+      });
+      elementsAndDetails(p, structId, function(){
+             
+             console.debug('param Elem Details : '+p, structId);
+         for (var j = 0; j < elements.length; j++) {
+                  console.debug("Boucle elements");
+                  for (var k = 0; k < donnees.length; k++) {
+                      console.debug("Boucle donnees");
+                     if (elements[j].id == donnees[k].dataElement) {
+                         ligne.id = elements[j].id;
+                         ligne.dataElement = elements[j].displayName;
+                         ligne.value = donnees[k].value;
+                         section.push(ligne);
+                         console.debug(ligne);
+                     }
+                  }
+                  
+             }
+             sections.push(section);
+
+      });
+
+   };
+
+  $scope.getSections = function(Id, p, structId){
+
+       $scope.getGroupElements(Id, p, structId, function(p, structId, sectionner){
+
+            console.debug(groupElements.length); 
+            for (var i = 0; i < groupElements.length; i++) {
+                  
+                  getElementService.getElements(groupElements[i].id).then(function(result){
+                           elements = result.data.dataElements; 
+                           console.debug(elements);
+                  });
+                  getDetailsService.getDetails(groupElements[i].id, p, structId).then(function(result){
+                           donnees = result.data.dataValues;
+                           console.debug(donnees);
+                  });
+
+            sectionner();
+            }
+
+            });
+       console.debug($scope.sections);      
+  };
+  //RECUPERER LES SECTION : PARAM OrgId, Period, deGroup RESULT section
+  //25/analytics.json?dimension=dx:DE_GROUP-EA73MFyukEv&dimension=pe:2017&dimension=ou:kJRsUAiJnHZ&paging=false
+  $scope.getSections(ensGroupId, period, facilityId);
+
+});*/

@@ -1,6 +1,26 @@
-<div class="container" ng-controller="donneesController">
+<div class="container" ng-controller="detailsController">
 
+	<!-- USE ng-repeat TO FILL THE TABLES -->
+	<h1>DETAILS SUR LA STRUCTURE : </h1>
+
+	<!-- <p>Mon premier group cest : {{sections[0].groupName}}</p> -->
+
+
+	 <div>
+			 <table ng-repeat="group in data">
+				<thead>
+					<tr><th>{{group.groupName}}</th></tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="ligne in group.section"><td>{{ligne.dataElement}}</td><td>{{ligne.value}}</td></tr>
+				</tbody>
+			</table> 
+		
+	</div>
+</div>
+<!--
 <h3><a href="#">Identification & Division Administratif</a></h3>
+<div></div>
 <div>
 <table>
   <tr>
@@ -236,5 +256,5 @@
   Endoscopie
   Scanneur
 </table>
-</div>
-</div>
+</div> -->
+ 

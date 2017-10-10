@@ -1,0 +1,57 @@
+<div class="container" ng-controller="OrganisationUnitsController">
+          
+          <div id="navigation" class="center">
+            <h2>Bar de navigation</h2>
+            
+             <FORM>
+               Select the zone <select ng-model="selectedRegion" ng-options="region.displayName for region in regions" 
+                                ng-change="getOrganisationUnits(districtLevel, selectedRegion.id)">
+               </select>
+               Select the district <select ng-model="selectedDistrict" ng-options="district.displayName for district in districts"
+                               ng-change="getOrganisationUnits(facilityLevel, selectedDistrict.id)">
+               </select>
+
+               <ul>
+                 <li ng-repeat="ensemble in orgUnitGroupSets"> Select the {{ensemble.displayName}} 
+                  <select ng-model="selectedGroup" 
+                       ng-options="group.displayName for group in ensemble.organisationUnitGroups" 
+                       ng-change="filtreTypeProprio(currentOrg.level, currentOrg.ancestor, ensemble.id, selectedGroup.id)">
+                  </select>
+                 </li>
+               </ul>
+             </FORM>
+          </div> 
+                    <div id="corps" class="center">
+            <h2>Menu :  Rechercher.        Ouvrir la carte.        Exporter les structures.</h2>
+    
+            <div>
+                <table class="table table-bordered table-hover">
+                   <thead>
+                     <tr>
+                       <th>Num</th>
+                       <th>Code</th>
+                       <th>Nom de la Structure</th>
+                       <th>Type de structure</th>
+                       <th>Proprietaire</th>
+                       <th>Region</th>
+                       <th>District</th>
+                       <th>Options</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr ng-repeat="facility in facilities">
+                       <td>N</td>
+                       <td>{{facility.id}}</td>
+                       <td>{{facility.displayName}}</td>
+                       <td>{{getEnsemble(facility.organisationUnitGroups,1)}}</td>
+                       <td>{{getEnsemble(facility.organisationUnitGroups,0)}}</td>
+                       <td>{{facility.ancestors[1].name}}</td>
+                       <td>{{facility.ancestors[2].name}}</td>
+                       <td><a href="#/details?id={{facility.id}}">Detailler</a> <a href="#/export">Exporter</a></td>
+                     </tr>
+                   </tbody>
+              
+                </table>
+            </div>
+          </div>
+</div>

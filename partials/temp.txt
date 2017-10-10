@@ -1,0 +1,241 @@
+<div class="container" ng-controller="detailsController">
+
+<h3><a href="#">Identification & Division Administratif</a></h3>
+<div></div>
+<div>
+<table>
+  <tr>
+  <td>Nom de la structure</td> 
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Code structure</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Année d’ouverture</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Année de collecte</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Région</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Préfecture</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Sous-préfecture</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Quartier/District</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Population couverte</td>
+  <td>N/A</td>
+  </tr>
+</table>
+</div>
+<h3><a href="#">Localisation physique</a></h3>
+<div>
+<table>
+  <tr>
+  <td>Coordonnees geo (Longitude, Latitude)</td>
+  <td>N/A</td>
+  </tr>
+</table>
+</div>
+<h3><a href="#">Classification</a></h3>
+<div>
+<table>
+  <tr>
+  <td>Niveau Administratif</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Type de la structure</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Propriétaire de la structure</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Statut opérationnel</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Statut régulier</td>
+  <td>N/A</td>
+  </tr>
+</table>
+</div>
+<h3><a href="#">Contact</a></h3>
+<div>
+<table>
+  <tr>
+  <td>Tél officiel(Flotte)</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Email(service)</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Nom du responsable</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Téléphone privé</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Email du responsable</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Adresse</td>
+  <td>N/A</td>
+  </tr>
+</table>
+</div>
+<h3><a href="#">Commodités</a></h3>
+<div>
+<table>
+  <tr>
+  <td>Source d’énergie</td>
+  <td>N/A</td>
+  </tr>
+  <tr>
+  <td>Source d'eau</td>
+  <td>N/A</td>
+  </tr>
+</table>
+</div>
+<h3><a href="#">Infrastructures</a></h3>
+<div>
+<table>
+  Salle d’accouchements
+  Salle de pansements/soins
+  Salle des accouchées maternité
+  Salle d’observation
+  Salle de radiologie
+  Laboratoire
+  Salle d’hospitalisation
+  Salles d’hospitalisation Médecine
+  Salles d’hosp Gynéco-obstétrique
+  Blocs opératoires en chirurgie
+  Bloc opératoire gyneco-obstetrique
+  Salles d’hospitalisation Chirurgie
+  Salle d’hospitalisation Pédiatrie
+  Salle des urgences
+  Pharmacie
+  Salle de garde
+  Morgue (Chambre froide)
+  Salle dentaire
+  Salle de vaccination
+  Salle réception
+  Salle de CPN
+  Salle de point de vente
+  Salle de CPC
+  Salle de Planification familiale
+  Salle counseling
+</table>
+</div>
+<h3><a href="#">Equipements</a></h3>
+<div>
+<table>
+  Lits
+  Voiture
+  Moto
+  Vélo
+  Tricycle
+  Congélateur
+  Réfrigérateur
+  Porte vaccin
+  Glacière
+  Ambulance
+  Incinérateurs
+  Générateur
+  Ordinateur
+  Panneau solaire
+</table>
+</div>
+<h3><a href="#">Ressources humaines</a></h3>
+<div>
+<table>
+  Médecins
+  Infirmiers
+  Dentistes
+  Biologistes
+  Pharmaciens
+  Sages-femmes
+  Aide soignants
+  Technicien de Santé Publique
+  Techniciens de laboratoire
+  Préparateur en pharmacie
+  Techniciens en radiologie
+  Agent Technique de Santé
+  Technicien odontologie
+</table>
+</div>
+<h3><a href="#">Services offerts</a></h3>
+<div>
+<table>
+  Consultations prénatales
+  Consultations postnatales (Néonatologie)
+  Consultations primaires curatives
+  Vaccination PEV
+  Petite chirurgie
+  Pansements-Petite chirurgie
+  Pharmacie
+  Cabinet dentaire
+  Service Ophtalmologie
+  Cardiologie
+  Pneumo-phtisiologie
+  Neuropsychiatrie
+  Odontologie
+  Prise en charge des Séropositifs/ARV
+  Prise en charge des prématurés
+  Consultation chirurgicale
+  Prise en charge chirurgie viscérale
+  Prise en charge traumatologie
+  Bloc opératoire chirurgie
+  Bloc opératoire maternité
+  Service anesthésie et réanimation
+  Service Soins intensifs
+  Service stérilisation
+  Consultations Pédiatrie
+  Chirurgie pédiatrique
+  Urgences medico-chirurgicale
+  Otorhino laryngologie ORL
+  Dermatologie
+  Neurochirurgie
+  Diabétologie
+  Oncologie
+  Endocrinologie
+</table>
+</div>
+<h3><a href="#">Examen laboratoire / Imagerie médicale</a></h3>
+<div>
+<table>
+  Hématologie
+  Bactériologie
+  Parasitologie
+  Sérologie
+  Biochimie du sang
+  Biochimie du LCR
+  Biochimie des urines
+  Radiographie
+  Echographie
+  Endoscopie
+  Scanneur
+</table>
+</div>
+</div>
